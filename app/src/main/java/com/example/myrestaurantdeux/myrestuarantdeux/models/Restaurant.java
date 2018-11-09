@@ -1,4 +1,4 @@
-package com.example.myrestaurantdeux.myrestuarantdeux;
+package com.example.myrestaurantdeux.myrestuarantdeux.models;
 
 import java.util.ArrayList;
 
@@ -58,5 +58,9 @@ public class Restaurant {
 
     public ArrayList<String> getCategories() {
         return categories;
+    }
+
+    public double getRating() {
+        return rating;
     }
 }

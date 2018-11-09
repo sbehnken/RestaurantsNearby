@@ -1,4 +1,7 @@
-package com.example.myrestaurantdeux.myrestuarantdeux;
+package com.example.myrestaurantdeux.myrestuarantdeux.services;
+
+import com.example.myrestaurantdeux.myrestuarantdeux.Constants;
+import com.example.myrestaurantdeux.myrestuarantdeux.models.Restaurant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +23,7 @@ public class YelpService {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.YELP_BASE_URL).newBuilder();
-        urlBuilder.addQueryParameter(Constants.LYELP_LOCATION_QUERY_PARAMETER, location);
+        urlBuilder.addQueryParameter(Constants.YELP_LOCATION_QUERY_PARAMETER, location);
         String url = urlBuilder.build().toString();
 
         Request request = new Request.Builder().url(url).header("Authorization",
@@ -32,6 +35,9 @@ public class YelpService {
 
     public ArrayList<Restaurant> processResults(Response response) {
         ArrayList<Restaurant> restaurants = new ArrayList<>();
+
+//        1.
+//       Boolean exists = response.isSuccessful()
 
         try {
             String jsonData = response.body().string();

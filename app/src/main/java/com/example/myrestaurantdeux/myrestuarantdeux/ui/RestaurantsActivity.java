@@ -1,18 +1,23 @@
-package com.example.myrestaurantdeux.myrestuarantdeux;
+package com.example.myrestaurantdeux.myrestuarantdeux.ui;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.example.myrestaurantdeux.myrestuarantdeux.R;
+import com.example.myrestaurantdeux.myrestuarantdeux.adapters.RestaurantListAdapter;
+import com.example.myrestaurantdeux.myrestuarantdeux.models.Restaurant;
+import com.example.myrestaurantdeux.myrestuarantdeux.services.YelpService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,8 +28,10 @@ import okhttp3.Response;
 
 public class RestaurantsActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private TextView mLocationTextView;
-    private ListView mListView;
+//    private TextView mLocationTextView;
+//    private ListView mListView;
+    private RecyclerView mRecyclerView;
+    private RestaurantListAdapter mAdapter;
 
     public ArrayList<Restaurant> restaurants = new ArrayList<>();
 
@@ -42,35 +49,38 @@ public class RestaurantsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants);
 
-        mListView = (ListView) findViewById(R.id.listView);
-        mLocationTextView = (TextView) findViewById(R.id.locationTextView);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+//        mListView = (ListView) findViewById(R.id.listView);
+//        mLocationTextView = (TextView) findViewById(R.id.locationTextView);
 
 //        MyRestaurantsArrayAdapter adapter = new MyRestaurantsArrayAdapter(this, android.R.layout.simple_list_item_1,
 //                restaurants, cuisines);
 //        mListView.setAdapter(adapter);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String restaurant = ((TextView)view).getText().toString();
-                Toast.makeText(RestaurantsActivity.this, restaurant, Toast.LENGTH_LONG).show();
-
-            }
-
-        });
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                String restaurant = ((TextView)view).getText().toString();
+//                Toast.makeText(RestaurantsActivity.this, restaurant, Toast.LENGTH_LONG).show();
+//
+//            }
+//
+//        });
 
 
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");
-        mLocationTextView.setText("Here are all the restaurants near: " + location);
+//        mLocationTextView.setText("Here are all the restaurants near: " + location);
         getRestaurants(location);
 
 
     }
+
     private void getRestaurants(String location) {
         final YelpService yelpService = new YelpService();
-
         yelpService.findRestaurants(location, new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
@@ -81,25 +91,32 @@ public class RestaurantsActivity extends AppCompatActivity {
                 restaurants = yelpService.processResults(response);
 
                 RestaurantsActivity.this.runOnUiThread(new Runnable() {
+
                     @Override
                     public void run() {
-                        String[] restaurantNames = new String[restaurants.size()];
-                        for(int i = 0; i < restaurantNames.length; i++) {
-                            restaurantNames[i] = restaurants.get(i).getName();
-                        }
-                        ArrayAdapter adapter = new ArrayAdapter(RestaurantsActivity.this,
-                                android.R.layout.simple_list_item_1, restaurantNames);
-                        mListView.setAdapter(adapter);
+                        mAdapter = new RestaurantListAdapter(getApplicationContext(), restaurants);
+                        mRecyclerView.setAdapter(mAdapter);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(RestaurantsActivity.this);
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setHasFixedSize(true);
 
-                        for (Restaurant restaurant : restaurants) {
-                            Log.d(TAG, "Name: " + restaurant.getName());
-                            Log.d(TAG, "Phone: " + restaurant.getPhone());
-                            Log.d(TAG, "Website: " + restaurant.getWebsite());
-                            Log.d(TAG, "Image url: " + restaurant.getImageUrl());
+//                        String[] restaurantNames = new String[restaurants.size()];
+//                        for(int i = 0; i < restaurantNames.length; i++) {
+//                            restaurantNames[i] = restaurants.get(i).getName();
+//                        }
+//                        ArrayAdapter adapter = new ArrayAdapter(RestaurantsActivity.this,
+//                                android.R.layout.simple_list_item_1, restaurantNames);
+//                        mListView.setAdapter(adapter);
+//
+//                        for (Restaurant restaurant : restaurants) {
+//                            Log.d(TAG, "Name: " + restaurant.getName());
+//                            Log.d(TAG, "Phone: " + restaurant.getPhone());
+//                            Log.d(TAG, "Website: " + restaurant.getWebsite());
+//                            Log.d(TAG, "Image url: " + restaurant.getImageUrl());
 //                            Log.d(TAG, "Rating: " + Double.toString(restaurant.getRating()));
-                            Log.d(TAG, "Address " + android.text.TextUtils.join(", ", restaurant.getAddress()));
-                            Log.d(TAG, "Categories " + restaurant.getCategories().toString());
-                        }
+//                            Log.d(TAG, "Address " + android.text.TextUtils.join(", ", restaurant.getAddress()));
+//                            Log.d(TAG, "Categories " + restaurant.getCategories().toString());
+//                        }
                     }
                 });
 //                try {
