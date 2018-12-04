@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //new instance that takes two parameters. Current context (the environment where the code is running),
                 // and the activity class
-                Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
+                Intent intent = new Intent(MainActivity.this, RestaurantListActivity.class);
 
                 //we attach data to an intent as a key/value pair
                 intent.putExtra("location", location);
