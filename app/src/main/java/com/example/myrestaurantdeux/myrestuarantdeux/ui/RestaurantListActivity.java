@@ -1,10 +1,13 @@
 package com.example.myrestaurantdeux.myrestuarantdeux.ui;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.myrestaurantdeux.myrestuarantdeux.R;
 import com.example.myrestaurantdeux.myrestuarantdeux.adapters.RestaurantListAdapter;
@@ -31,13 +34,30 @@ public class RestaurantListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerView);
 
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");
         getRestaurants(location);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
+        }
     }
+
+        public boolean onOptionsItemSelected(MenuItem item) {
+            switch (item.getItemId()){
+                case  android.R.id.home:
+                finish();
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+        public boolean onCreateOptionsMenu(Menu menu) {
+            return true;
+        }
 
     private void getRestaurants(String location) {
         final YelpService yelpService = new YelpService();
@@ -93,4 +113,5 @@ public class RestaurantListActivity extends AppCompatActivity {
             }
         });
     }
+
 }

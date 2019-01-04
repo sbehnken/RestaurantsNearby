@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
 
                     String location = mLocationEditText.getText().toString();
 

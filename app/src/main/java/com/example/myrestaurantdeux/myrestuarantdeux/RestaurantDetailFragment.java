@@ -92,7 +92,8 @@ public class RestaurantDetailFragment extends Fragment {
         mAddressLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?q=" + mRestaurant.getName() + mRestaurant.getAddress());
+
+                Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?q=" + mRestaurant.getAddress() + mRestaurant.getName());
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 startActivity(mapIntent);
 
