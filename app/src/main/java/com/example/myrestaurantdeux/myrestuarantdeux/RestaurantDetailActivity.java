@@ -8,6 +8,8 @@ import android.view.View;
 import com.example.myrestaurantdeux.myrestuarantdeux.R;
 import com.example.myrestaurantdeux.myrestuarantdeux.adapters.RestaurantPagerAdapter;
 import com.example.myrestaurantdeux.myrestuarantdeux.models.Restaurant;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import org.parceler.Parcels;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_detail);
 
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        mViewPager = findViewById(R.id.viewPager);
 
         mRestaurants = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
         int startingPosition = getIntent().getIntExtra("position", 0);

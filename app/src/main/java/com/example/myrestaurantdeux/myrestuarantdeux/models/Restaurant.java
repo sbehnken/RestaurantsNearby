@@ -1,11 +1,11 @@
 package com.example.myrestaurantdeux.myrestuarantdeux.models;
 
+import android.os.Parcelable;
+
 import org.parceler.Parcel;
 import java.util.ArrayList;
 
-@Parcel
-
-public class Restaurant {
+public class Restaurant implements Parcelable {
 
     private String name;
     private String phone;
@@ -16,8 +16,6 @@ public class Restaurant {
     private double latitude;
     private double longitude;
     private ArrayList<String> categories = new ArrayList<>();
-
-    public Restaurant() {}
 
     public Restaurant(String name, String phone, String website, double rating, String imageUrl,
                       ArrayList<String > address, double latitude, double longitude, ArrayList<String> categories) {
@@ -32,6 +30,30 @@ public class Restaurant {
         this.longitude = longitude;
         this.categories = categories;
     }
+
+    protected Restaurant(android.os.Parcel in) {
+        name = in.readString();
+        phone = in.readString();
+        website = in.readString();
+        rating = in.readDouble();
+        imageUrl = in.readString();
+        address = in.createStringArrayList();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        categories = in.createStringArrayList();
+    }
+
+    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(android.os.Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -67,5 +89,23 @@ public class Restaurant {
 
     public double getRating() {
         return rating;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(android.os.Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(phone);
+        dest.writeString(website);
+        dest.writeDouble(rating);
+        dest.writeString(imageUrl);
+        dest.writeStringList(address);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeStringList(categories);
     }
 }

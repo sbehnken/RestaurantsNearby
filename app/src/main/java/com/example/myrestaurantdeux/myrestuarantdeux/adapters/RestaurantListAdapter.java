@@ -75,7 +75,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             mContext.startActivity(intent);
         }
 
-
         public void bindRestaurant(Restaurant restaurant) {
             Picasso.with(mContext).load(restaurant.getImageUrl()).into(mRestaurantImageView);
 
