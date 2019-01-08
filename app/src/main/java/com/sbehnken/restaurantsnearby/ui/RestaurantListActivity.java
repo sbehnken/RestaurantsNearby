@@ -1,6 +1,7 @@
-package com.example.myrestaurantdeux.myrestuarantdeux.ui;
+package com.sbehnken.restaurantsnearby.ui;
 
-import android.content.Intent;
+import android.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,9 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.myrestaurantdeux.myrestuarantdeux.R;
-import com.example.myrestaurantdeux.myrestuarantdeux.adapters.RestaurantListAdapter;
-import com.example.myrestaurantdeux.myrestuarantdeux.models.Restaurant;
-import com.example.myrestaurantdeux.myrestuarantdeux.services.YelpService;
+import com.sbehnken.restaurantsnearby.adapters.RestaurantListAdapter;
+import com.sbehnken.restaurantsnearby.models.Restaurant;
+import com.sbehnken.restaurantsnearby.services.YelpService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class RestaurantListActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
     private RestaurantListAdapter mAdapter;
@@ -36,8 +36,7 @@ public class RestaurantListActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recyclerView);
 
-        Intent intent = getIntent();
-        String location = intent.getStringExtra("location");
+        String location = getIntent().getStringExtra("zipcode");
         getRestaurants(location);
 
         ActionBar actionBar = getSupportActionBar();
@@ -46,21 +45,39 @@ public class RestaurantListActivity extends AppCompatActivity {
 
         }
     }
-
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()){
-                case  android.R.id.home:
+                    case  android.R.id.home:
                 finish();
+
+//                case R.id.favorites_item:
+//                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(android.R.id.content, new FavoritesListFragment());
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+
                 return true;
             }
             return super.onOptionsItemSelected(item);
         }
-        public boolean onCreateOptionsMenu(Menu menu) {
-            return true;
-        }
+
+//        public boolean onCreateOptionsMenu(Menu menu) {
+//           getMenuInflater().inflate(R.menu.overflow_menu, menu);
+//          return true;
+//        }
 
     private void getRestaurants(String location) {
-        final YelpService yelpService = new YelpService();
+//        String counter; [defined]
+//        counter = "hello"; [assigned]
+//        String counter = "hello"; [defined & assigned]
+//        [type] [instance variable name] = [value]
+
+       final YelpService yelpService = new YelpService();
+//       [definition] = [what it is being defined as]
+//                [assigned]
+//        [type] [instance variable name] = new [instance of type]
+//                                                [using the constructor]
+
         yelpService.findRestaurants(location, new Callback() {
 
             @Override
@@ -81,37 +98,9 @@ public class RestaurantListActivity extends AppCompatActivity {
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(RestaurantListActivity.this);
                         mRecyclerView.setLayoutManager(layoutManager);
                         mRecyclerView.setHasFixedSize(true);
-
-//                        String[] restaurantNames = new String[restaurants.size()];
-//                        for(int i = 0; i < restaurantNames.length; i++) {
-//                            restaurantNames[i] = restaurants.get(i).getName();
-//                        }
-//                        ArrayAdapter adapter = new ArrayAdapter(RestaurantListActivity.this,
-//                                android.R.layout.simple_list_item_1, restaurantNames);
-//                        mListView.setAdapter(adapter);
-//
-//                        for (Restaurant restaurant : restaurants) {
-//                            Log.d(TAG, "Name: " + restaurant.getName());
-//                            Log.d(TAG, "Phone: " + restaurant.getPhone());
-//                            Log.d(TAG, "Website: " + restaurant.getWebsite());
-//                            Log.d(TAG, "Image url: " + restaurant.getImageUrl());
-//                            Log.d(TAG, "Rating: " + Double.toString(restaurant.getRating()));
-//                            Log.d(TAG, "Address " + android.text.TextUtils.join(", ", restaurant.getAddress()));
-//                            Log.d(TAG, "Categories " + restaurant.getCategories().toString());
-//                        }
                     }
                 });
-//                try {
-//                    String jsonData = response.body().toString();
-//                    if (response.isSuccessful()) {
-//                        Log.v(TAG, jsonData);
-//                        restaurants = yelpService.processResults(response);
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
             }
         });
     }
-
 }

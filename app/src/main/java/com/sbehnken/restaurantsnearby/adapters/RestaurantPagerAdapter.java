@@ -1,11 +1,11 @@
-package com.example.myrestaurantdeux.myrestuarantdeux.adapters;
+package com.sbehnken.restaurantsnearby.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.myrestaurantdeux.myrestuarantdeux.models.Restaurant;
-import com.example.myrestaurantdeux.myrestuarantdeux.RestaurantDetailFragment;
+import com.sbehnken.restaurantsnearby.models.Restaurant;
+import com.sbehnken.restaurantsnearby.RestaurantDetailFragment;
 
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-package com.example.myrestaurantdeux.myrestuarantdeux.services;
+package com.sbehnken.restaurantsnearby.services;
 
-import com.example.myrestaurantdeux.myrestuarantdeux.Constants;
-import com.example.myrestaurantdeux.myrestuarantdeux.models.Restaurant;
+import com.sbehnken.restaurantsnearby.Constants;
+import com.sbehnken.restaurantsnearby.models.Restaurant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +18,9 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 public class YelpService {
+
+    public YelpService() {
+    }
 
     public static void  findRestaurants(String location, Callback callback) {
         OkHttpClient client = new OkHttpClient.Builder().build();
@@ -36,9 +39,6 @@ public class YelpService {
     public ArrayList<Restaurant> processResults(Response response) {
         ArrayList<Restaurant> restaurants = new ArrayList<>();
 
-//        1.
-//       Boolean exists = response.isSuccessful()
-
         try {
             String jsonData = response.body().string();
             JSONObject yelpJSON = new JSONObject(jsonData);
@@ -52,9 +52,9 @@ public class YelpService {
 
                 String imageUrl = restaurantJSON.getString("image_url");
 
-                double latitude = (double) restaurantJSON.getJSONObject("coordinates").getDouble("latitude");
+                double latitude = restaurantJSON.getJSONObject("coordinates").getDouble("latitude");
 
-                double longitude = (double) restaurantJSON.getJSONObject("coordinates").getDouble("longitude");
+                double longitude = restaurantJSON.getJSONObject("coordinates").getDouble("longitude");
 
                 ArrayList<String> address = new ArrayList<>();
                 JSONArray addressJSON = restaurantJSON.getJSONObject("location").getJSONArray("display_address");

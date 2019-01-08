@@ -1,8 +1,7 @@
-package com.example.myrestaurantdeux.myrestuarantdeux.models;
+package com.sbehnken.restaurantsnearby.models;
 
 import android.os.Parcelable;
 
-import org.parceler.Parcel;
 import java.util.ArrayList;
 
 public class Restaurant implements Parcelable {
@@ -12,10 +11,10 @@ public class Restaurant implements Parcelable {
     private String website;
     private double rating;
     private String imageUrl;
-    private ArrayList<String> address = new ArrayList<>();
+    private ArrayList<String> address;
     private double latitude;
     private double longitude;
-    private ArrayList<String> categories = new ArrayList<>();
+    private ArrayList<String> categories;
 
     public Restaurant(String name, String phone, String website, double rating, String imageUrl,
                       ArrayList<String > address, double latitude, double longitude, ArrayList<String> categories) {
@@ -31,7 +30,7 @@ public class Restaurant implements Parcelable {
         this.categories = categories;
     }
 
-    protected Restaurant(android.os.Parcel in) {
+    private Restaurant(android.os.Parcel in) {
         name = in.readString();
         phone = in.readString();
         website = in.readString();

@@ -1,8 +1,7 @@
-package com.example.myrestaurantdeux.myrestuarantdeux.adapters;
+package com.sbehnken.restaurantsnearby.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myrestaurantdeux.myrestuarantdeux.R;
-import com.example.myrestaurantdeux.myrestuarantdeux.RestaurantDetailActivity;
-import com.example.myrestaurantdeux.myrestuarantdeux.models.Restaurant;
+import com.sbehnken.restaurantsnearby.RestaurantDetailActivity;
+import com.sbehnken.restaurantsnearby.models.Restaurant;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -34,8 +33,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public RestaurantListAdapter.RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_list_item, parent, false);
 
-        RestaurantViewHolder viewHolder = new RestaurantViewHolder(view);
-        return viewHolder;
+        return new RestaurantViewHolder(view);
+
     }
 
     @Override
@@ -56,13 +55,13 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         private Context mContext;
 
 
-        public RestaurantViewHolder(View itemView) {
+        RestaurantViewHolder(View itemView) {
             super(itemView);
             mContext = itemView.getContext();
-            mRestaurantImageView = (ImageView) itemView.findViewById(R.id.restaurantImageView);
-            mRestaurantNameTextView = (TextView) itemView.findViewById(R.id.restaurantNameTextView);
-            mCategoryTextView = (TextView) itemView.findViewById(R.id.categoryTextView);
-            mRatingTextView = (TextView) itemView.findViewById(R.id.ratingTextView);
+            mRestaurantImageView = itemView.findViewById(R.id.restaurantImageView);
+            mRestaurantNameTextView = itemView.findViewById(R.id.restaurantNameTextView);
+            mCategoryTextView = itemView.findViewById(R.id.categoryTextView);
+            mRatingTextView = itemView.findViewById(R.id.ratingTextView);
             itemView.setOnClickListener(this);
         }
 
@@ -75,7 +74,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             mContext.startActivity(intent);
         }
 
-        public void bindRestaurant(Restaurant restaurant) {
+        private void bindRestaurant(Restaurant restaurant) {
             Picasso.with(mContext).load(restaurant.getImageUrl()).into(mRestaurantImageView);
 
             mRestaurantNameTextView.setText(restaurant.getName());

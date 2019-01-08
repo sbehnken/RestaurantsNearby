@@ -1,4 +1,4 @@
-package com.example.myrestaurantdeux.myrestuarantdeux.ui;
+package com.sbehnken.restaurantsnearby.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mLocationEditText = (EditText) findViewById(R.id.locationEditText);
-        mFindRestaurantsButton = (Button) findViewById(R.id.findRestaurantsButton);
+        mLocationEditText = findViewById(R.id.locationEditText);
+        mFindRestaurantsButton = findViewById(R.id.findRestaurantsButton);
 
         mLocationEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -31,14 +31,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
 
-                    String location = mLocationEditText.getText().toString();
+                    String zipcode = mLocationEditText.getText().toString();
 
                     //new instance that takes two parameters. Current context (the environment where the code is running),
                     // and the activity class
                     Intent intent = new Intent(MainActivity.this, RestaurantListActivity.class);
 
                     //we attach data to an intent as a key/value pair
-                    intent.putExtra("location", location);
+                    intent.putExtra("zipcode", zipcode);
                     startActivity(intent);
                     return true;
                 }
@@ -50,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-        String location = mLocationEditText.getText().toString();
+        String zipcode = mLocationEditText.getText().toString();
 
                 Intent intent = new Intent(MainActivity.this, RestaurantListActivity.class);
 
                 //we attach data to an intent as a key/value pair
-                intent.putExtra("location", location);
+                intent.putExtra("zipcode", zipcode);
                 startActivity(intent);
             }
         });

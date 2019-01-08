@@ -1,4 +1,4 @@
-package com.example.myrestaurantdeux.myrestuarantdeux;
+package com.sbehnken.restaurantsnearby;
 
 
 import android.content.Intent;
@@ -12,18 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myrestaurantdeux.myrestuarantdeux.R;
-import com.example.myrestaurantdeux.myrestuarantdeux.models.Restaurant;
+import com.sbehnken.restaurantsnearby.models.Restaurant;
 import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
 
 public class RestaurantDetailFragment extends Fragment {
-    private ImageView mImageLabel;
-    private TextView mNameLabel;
     private TextView mCategoriesLabel;
-    private TextView mRatingLabel;
-    private TextView mWebsiteLabel;
-    private TextView mPhoneLabel;
-    private TextView mAddressLabel;
     private TextView mSaveRestaurantButton;
 
     private Restaurant mRestaurant;
@@ -46,20 +40,18 @@ public class RestaurantDetailFragment extends Fragment {
         mRestaurant = Parcels.unwrap(getArguments().getParcelable("restaurant"));
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_restaurant_detail, container, false);
 
-        mImageLabel = view.findViewById(R.id.restaurantImageView);
-        mNameLabel = view.findViewById(R.id.restaurantNameTextView);
-//        mCategoriesLabel = (TextView) view.findViewById(R.id.);
-        mRatingLabel = view.findViewById(R.id.ratingTextView);
-        mWebsiteLabel = view.findViewById(R.id.websiteTextView);
-        mPhoneLabel = view.findViewById(R.id.phoneTextView);
-        mAddressLabel = view.findViewById(R.id.addressTextView);
+        ImageView mImageLabel = view.findViewById(R.id.restaurantImageView);
+        TextView mNameLabel = view.findViewById(R.id.restaurantNameTextView);
+        TextView mRatingLabel = view.findViewById(R.id.ratingTextView);
+        TextView mWebsiteLabel = view.findViewById(R.id.websiteTextView);
+        TextView mPhoneLabel = view.findViewById(R.id.phoneTextView);
+        TextView mAddressLabel = view.findViewById(R.id.addressTextView);
         mSaveRestaurantButton = view.findViewById(R.id.saveRestaurantButton);
 
         if(mRestaurant.getImageUrl() != null && !mRestaurant.getImageUrl().isEmpty()) {
@@ -67,7 +59,6 @@ public class RestaurantDetailFragment extends Fragment {
         }
 
         mNameLabel.setText(mRestaurant.getName());
-//        mCategoriesLabel.setText(android.text.TextUtils.join(", ", mRestaurant.getCategories()));
         mRatingLabel.setText(Double.toString(mRestaurant.getRating()) + "/5");
         mPhoneLabel.setText((mRestaurant.getPhone()));
         mAddressLabel.setText(android.text.TextUtils.join(", ", mRestaurant.getAddress()));
