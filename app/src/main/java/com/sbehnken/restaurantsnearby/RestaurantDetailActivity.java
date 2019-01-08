@@ -37,6 +37,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Restaurants Nearby");
         }
     }
 //    public boolean onOptionsItemSelected(MenuItem item) {

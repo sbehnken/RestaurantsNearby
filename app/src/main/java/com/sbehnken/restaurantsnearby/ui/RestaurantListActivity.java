@@ -1,13 +1,10 @@
 package com.sbehnken.restaurantsnearby.ui;
 
-import android.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.myrestaurantdeux.myrestuarantdeux.R;
@@ -42,6 +39,7 @@ public class RestaurantListActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Restaurants Nearby");
 
         }
     }

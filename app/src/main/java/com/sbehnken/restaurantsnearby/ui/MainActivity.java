@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         mLocationEditText = findViewById(R.id.locationEditText);
         mFindRestaurantsButton = findViewById(R.id.findRestaurantsButton);
 
+        getSupportActionBar().setTitle("Restaurants Nearby");
+
         mLocationEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+
+
             }
         });
 
