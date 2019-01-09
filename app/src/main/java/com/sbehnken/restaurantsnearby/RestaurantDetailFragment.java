@@ -8,19 +8,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myrestaurantdeux.myrestuarantdeux.R;
 import com.sbehnken.restaurantsnearby.models.Restaurant;
 import com.squareup.picasso.Picasso;
+
 import org.parceler.Parcels;
 
 public class RestaurantDetailFragment extends Fragment {
-    private TextView mCategoriesLabel;
-    private TextView mSaveRestaurantButton;
-
     private Restaurant mRestaurant;
+    private boolean mStarClicked;
 
     public static RestaurantDetailFragment newInstance(Restaurant restaurant) {
         RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
@@ -38,6 +38,7 @@ public class RestaurantDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRestaurant = Parcels.unwrap(getArguments().getParcelable("restaurant"));
+
     }
 
     @Override
@@ -52,16 +53,36 @@ public class RestaurantDetailFragment extends Fragment {
         TextView mWebsiteLabel = view.findViewById(R.id.websiteTextView);
         TextView mPhoneLabel = view.findViewById(R.id.phoneTextView);
         TextView mAddressLabel = view.findViewById(R.id.addressTextView);
-        mSaveRestaurantButton = view.findViewById(R.id.saveRestaurantButton);
+        TextView mCuisineLabel = view.findViewById(R.id.cuisineTextView);
+        TextView mSaveRestaurantsButton = view.findViewById(R.id.saveRestaurantButton);
+        final ImageButton mFavoritesButtonOff = view.findViewById(R.id.favorite_button_off);
+        final ImageButton mFavoritesButtonOn = view.findViewById(R.id.favorite_button_on);
 
-        if(mRestaurant.getImageUrl() != null && !mRestaurant.getImageUrl().isEmpty()) {
+
+        if (mRestaurant.getImageUrl() != null && !mRestaurant.getImageUrl().isEmpty()) {
             Picasso.with(view.getContext()).load(mRestaurant.getImageUrl()).into(mImageLabel);
         }
 
         mNameLabel.setText(mRestaurant.getName());
+        mCuisineLabel.setText(android.text.TextUtils.join(", ", mRestaurant.getCategories()));
         mRatingLabel.setText(Double.toString(mRestaurant.getRating()) + "/5");
         mPhoneLabel.setText((mRestaurant.getPhone()));
         mAddressLabel.setText(android.text.TextUtils.join(", ", mRestaurant.getAddress()));
+
+        mFavoritesButtonOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFavoritesButtonOff.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        mFavoritesButtonOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFavoritesButtonOff.setVisibility(View.VISIBLE);
+            }
+        });
+
 
         mPhoneLabel.setOnClickListener(new View.OnClickListener() {
             @Override
