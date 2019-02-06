@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.myrestaurantdeux.myrestuarantdeux.R;
+import com.sbehnken.restaurantsnearby.R;
+
 
 public class FavoritesListFragment extends Fragment {
 

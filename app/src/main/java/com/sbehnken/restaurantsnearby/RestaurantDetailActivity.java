@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.myrestaurantdeux.myrestuarantdeux.R;
 import com.sbehnken.restaurantsnearby.adapters.RestaurantPagerAdapter;
 import com.sbehnken.restaurantsnearby.models.Restaurant;
 import com.sbehnken.restaurantsnearby.ui.FavoritesListFragment;

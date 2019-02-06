@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.myrestaurantdeux.myrestuarantdeux.R;
 import com.sbehnken.restaurantsnearby.models.Restaurant;
 import com.squareup.picasso.Picasso;
 

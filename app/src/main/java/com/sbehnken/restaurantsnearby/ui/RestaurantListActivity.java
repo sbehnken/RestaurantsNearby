@@ -12,8 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.myrestaurantdeux.myrestuarantdeux.R;
 import com.sbehnken.restaurantsnearby.Constants;
+import com.sbehnken.restaurantsnearby.R;
 import com.sbehnken.restaurantsnearby.adapters.RestaurantListAdapter;
 import com.sbehnken.restaurantsnearby.models.Restaurant;
 import com.sbehnken.restaurantsnearby.services.YelpService;
