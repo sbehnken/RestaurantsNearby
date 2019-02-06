@@ -40,23 +40,23 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Restaurants Nearby");
         }
     }
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case  android.R.id.home:
-//                finish();
-//
-//            case R.id.favorites_item:
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(android.R.id.content, new FavoritesListFragment());
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.overflow_menu, menu);
-//        return true;
-//    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case  android.R.id.home:
+                finish();
+
+            case R.id.favorites_item:
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(android.R.id.content, new FavoritesListFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.overflow_menu, menu);
+        return true;
+    }
     }
 

@@ -113,8 +113,5 @@ public class RestaurantDetailFragment extends Fragment {
         });
 
         return view;
-
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_restaurant_detail, container, false);
     }
 }
