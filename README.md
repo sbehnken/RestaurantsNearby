@@ -1,4 +1,6 @@
 # Restaurants Nearby
+## Overview
+Designed to find resturants near the inputted zip code. 
 # Playstore
 [RestaurantsNearby](https://play.google.com/store/apps/details?id=com.sbehnken.restaurantsnearby)
 # Privacy Policy
