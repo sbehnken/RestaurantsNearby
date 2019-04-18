@@ -27,9 +27,6 @@ import okhttp3.Response;
 
 public class RestaurantListActivity extends AppCompatActivity {
 
-    private SharedPreferences mSharedPreferences;
-    private String mRecentAddress;
-
     private RecyclerView mRecyclerView;
     private RestaurantListAdapter mAdapter;
 
@@ -42,11 +39,12 @@ public class RestaurantListActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recyclerView);
 
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
-        if (mRecentAddress != null) {
-            getRestaurants(mRecentAddress);
-        }
+        //this keeps overriding user inputted zipcode
+//        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        String mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
+//        if (mRecentAddress != null) {
+//            getRestaurants(mRecentAddress);
+//        }
 
         String location = getIntent().getStringExtra("zipcode");
         getRestaurants(location);
@@ -57,6 +55,11 @@ public class RestaurantListActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Restaurants Nearby");
 
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.overflow_menu, menu);
+        return true;
     }
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()){
@@ -74,24 +77,10 @@ public class RestaurantListActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
 
-        public boolean onCreateOptionsMenu(Menu menu) {
-           getMenuInflater().inflate(R.menu.overflow_menu, menu);
-          return true;
-        }
-
     private void getRestaurants(String location) {
-//        String counter; [defined]
-//        counter = "hello"; [assigned]
-//        String counter = "hello"; [defined & assigned]
-//        [type] [instance variable name] = [value]
 
        final YelpService yelpService = new YelpService();
-//       [definition] = [what it is being defined as]
-//                [assigned]
-//        [type] [instance variable name] = new [instance of type]
-//                                                [using the constructor]
-
-        yelpService.findRestaurants(location, new Callback() {
+        YelpService.findRestaurants(location, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -99,7 +88,7 @@ public class RestaurantListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) { //throws IOException
+            public void onResponse(Call call, Response response) {
                 restaurants = yelpService.processResults(response);
 
                 RestaurantListActivity.this.runOnUiThread(new Runnable() {

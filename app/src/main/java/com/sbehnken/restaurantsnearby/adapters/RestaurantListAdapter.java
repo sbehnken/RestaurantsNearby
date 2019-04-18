@@ -54,7 +54,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         private TextView mRatingTextView;
         private Context mContext;
 
-
         RestaurantViewHolder(View itemView) {
             super(itemView);
             mContext = itemView.getContext();

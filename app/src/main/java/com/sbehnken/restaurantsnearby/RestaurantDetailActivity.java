@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class RestaurantDetailActivity extends AppCompatActivity {
     ArrayList<Restaurant> mRestaurants = new ArrayList<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

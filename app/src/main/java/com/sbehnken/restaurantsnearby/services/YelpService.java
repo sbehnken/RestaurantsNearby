@@ -19,9 +19,6 @@ import okhttp3.Response;
 
 public class YelpService {
 
-    public YelpService() {
-    }
-
     public static void  findRestaurants(String location, Callback callback) {
         OkHttpClient client = new OkHttpClient.Builder().build();
 

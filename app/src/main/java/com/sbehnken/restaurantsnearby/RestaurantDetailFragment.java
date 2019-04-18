@@ -2,8 +2,10 @@ package com.sbehnken.restaurantsnearby;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sbehnken.restaurantsnearby.models.Restaurant;
 import com.squareup.picasso.Picasso;
@@ -19,7 +22,10 @@ import org.parceler.Parcels;
 
 public class RestaurantDetailFragment extends Fragment {
     private Restaurant mRestaurant;
-    private boolean mStarClicked;
+//    private boolean mStarClicked;
+
+//    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
     public static RestaurantDetailFragment newInstance(Restaurant restaurant) {
         RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
@@ -38,6 +44,9 @@ public class RestaurantDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mRestaurant = Parcels.unwrap(getArguments().getParcelable("restaurant"));
 
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        mEditor = mSharedPreferences.edit();
+
     }
 
     @Override
@@ -53,7 +62,7 @@ public class RestaurantDetailFragment extends Fragment {
         TextView mPhoneLabel = view.findViewById(R.id.phoneTextView);
         TextView mAddressLabel = view.findViewById(R.id.addressTextView);
         TextView mCuisineLabel = view.findViewById(R.id.cuisineTextView);
-        TextView mSaveRestaurantsButton = view.findViewById(R.id.saveRestaurantButton);
+//        TextView mSaveRestaurantsButton = view.findViewById(R.id.saveRestaurantButton);
         final ImageButton mFavoritesButtonOff = view.findViewById(R.id.favorite_button_off);
         final ImageButton mFavoritesButtonOn = view.findViewById(R.id.favorite_button_on);
 
@@ -72,6 +81,14 @@ public class RestaurantDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mFavoritesButtonOff.setVisibility(View.INVISIBLE);
+
+//                mSharedPreferences.edit().putString("button_value", )
+//
+//                private void addToSharedPreferences () {
+//                    mEditor.putString(, ).apply();
+//                }
+
+                Toast.makeText( getActivity(), "Saved to Favorites", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -79,6 +96,8 @@ public class RestaurantDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mFavoritesButtonOff.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Removed from Favorites", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -110,6 +129,13 @@ public class RestaurantDetailFragment extends Fragment {
 
             }
         });
+
+//        mSaveRestaurantsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         return view;
     }
