@@ -27,6 +27,4 @@ public class ZipcodeService {
    public Call<Zipcode> validateZipcode(String zipcode) {
         return zipcodeInterface.validateZipcode(BuildConfig.ZIPCODE_TOKEN, zipcode);
     }
-
-
 }
