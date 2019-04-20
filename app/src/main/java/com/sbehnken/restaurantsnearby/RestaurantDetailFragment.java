@@ -25,7 +25,7 @@ public class RestaurantDetailFragment extends Fragment {
 //    private boolean mStarClicked;
 
 //    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
+//    private SharedPreferences.Editor mEditor;
 
     public static RestaurantDetailFragment newInstance(Restaurant restaurant) {
         RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();

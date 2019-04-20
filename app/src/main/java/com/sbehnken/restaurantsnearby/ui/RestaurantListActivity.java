@@ -1,5 +1,6 @@
 package com.sbehnken.restaurantsnearby.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -53,29 +55,31 @@ public class RestaurantListActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Restaurants Nearby");
-
         }
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.overflow_menu, menu);
         return true;
     }
+        @Override
         public boolean onOptionsItemSelected(MenuItem item) {
-            switch (item.getItemId()){
-                    case  android.R.id.home:
-                finish();
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    onBackPressed();
+                    break;
 
                 case R.id.favorites_item:
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(android.R.id.content, new FavoritesListFragment());
                     transaction.addToBackStack(null);
                     transaction.commit();
-
-                return true;
+                    break;
             }
-            return super.onOptionsItemSelected(item);
+            return false;
         }
+
 
     private void getRestaurants(String location) {
 

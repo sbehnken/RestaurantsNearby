@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sbehnken.restaurantsnearby.R;
@@ -20,6 +21,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button mFindRestaurantsButton;
     private EditText mLocationEditText;
     private String zipcode;
 
@@ -29,48 +31,44 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mLocationEditText = findViewById(R.id.locationEditText);
-        Button mFindRestaurantsButton = findViewById(R.id.findRestaurantsButton);
+        mFindRestaurantsButton = findViewById(R.id.findRestaurantsButton);
 
-        getSupportActionBar().setTitle("Restaurants Nearby");
-
-        mLocationEditText.setOnKeyListener(new View.OnKeyListener() {
+        mLocationEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     zipcode = mLocationEditText.getText().toString();
                     getZipcode(zipcode);
                     return true;
-                }
-                return false;
             }
         });
-
+//todo add ripple, and/or progress spinner on the restaurant list activity
         mFindRestaurantsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getZipcode(zipcode);
+                zipcode = mLocationEditText.getText().toString();
+                    getZipcode(zipcode);
             }
         });
-    }
+        }
 
-    private void getZipcode(String word) {
+        private void getZipcode(String word) {
         ZipcodeService zipcodeService = new ZipcodeService();
         zipcodeService.validateZipcode(word).enqueue(new Callback<Zipcode>() {
             @Override
             public void onResponse(Call<Zipcode> call, Response<Zipcode> response) {
-                if (response.code() == 404 || response.code() == 400) {
-                    Toast.makeText(getApplicationContext(), "Please input real zip code", Toast.LENGTH_SHORT).show();
-                } else {
+                    if(response.code() == 404 || response.code() == 400) {
+                            Toast.makeText(getApplicationContext(), "Please input real zip code", Toast.LENGTH_SHORT).show();
+                        } else {
                     Intent intent = new Intent(MainActivity.this, RestaurantListActivity.class);
                     intent.putExtra("zipcode", zipcode);
                     startActivity(intent);
                 }
-            }
+                    }
 
             @Override
             public void onFailure(Call<Zipcode> call, Throwable t) {
                 Log.e("Response fail", t.getMessage());
             }
         });
+        }
     }
-}

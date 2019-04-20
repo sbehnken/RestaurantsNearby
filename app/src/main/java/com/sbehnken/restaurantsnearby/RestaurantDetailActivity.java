@@ -41,14 +41,15 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case  android.R.id.home:
-                finish();
+                onBackPressed();
+                break;
 
             case R.id.favorites_item:
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(android.R.id.content, new FavoritesListFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
-                return true;
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
