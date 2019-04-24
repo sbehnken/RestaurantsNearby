@@ -1,5 +1,6 @@
 package com.sbehnken.restaurantsnearby;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,10 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sbehnken.restaurantsnearby.adapters.RestaurantPagerAdapter;
 import com.sbehnken.restaurantsnearby.models.Restaurant;
@@ -17,6 +22,9 @@ import java.util.ArrayList;
 
 public class RestaurantDetailActivity extends AppCompatActivity {
     ArrayList<Restaurant> mRestaurants = new ArrayList<>();
+
+//    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+//    SharedPreferences.Editor editor = pref.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Restaurants Nearby");
         }
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case  android.R.id.home:

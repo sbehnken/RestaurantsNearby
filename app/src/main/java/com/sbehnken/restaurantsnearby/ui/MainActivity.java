@@ -21,7 +21,6 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mFindRestaurantsButton;
     private EditText mLocationEditText;
     private String zipcode;
 
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mLocationEditText = findViewById(R.id.locationEditText);
-        mFindRestaurantsButton = findViewById(R.id.findRestaurantsButton);
+        Button mFindRestaurantsButton = findViewById(R.id.findRestaurantsButton);
 
         mLocationEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
             }
         });
-//todo add ripple, and/or progress spinner on the restaurant list activity
+
         mFindRestaurantsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Zipcode> call, Response<Zipcode> response) {
                     if(response.code() == 404 || response.code() == 400) {
-                            Toast.makeText(getApplicationContext(), "Please input real zip code", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Please input real zip code", Toast.LENGTH_SHORT).show();
                         } else {
                     Intent intent = new Intent(MainActivity.this, RestaurantListActivity.class);
                     intent.putExtra("zipcode", zipcode);

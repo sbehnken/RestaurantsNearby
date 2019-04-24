@@ -1,5 +1,6 @@
 package com.sbehnken.restaurantsnearby.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -13,9 +14,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.sbehnken.restaurantsnearby.Constants;
 import com.sbehnken.restaurantsnearby.R;
+import com.sbehnken.restaurantsnearby.RestaurantDetailFragment;
 import com.sbehnken.restaurantsnearby.adapters.RestaurantListAdapter;
 import com.sbehnken.restaurantsnearby.models.Restaurant;
 import com.sbehnken.restaurantsnearby.services.YelpService;
@@ -34,6 +38,8 @@ public class RestaurantListActivity extends AppCompatActivity {
 
     public ArrayList<Restaurant> restaurants = new ArrayList<>();
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +47,10 @@ public class RestaurantListActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recyclerView);
 
-        //this keeps overriding user inputted zipcode
-//        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        String mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
-//        if (mRecentAddress != null) {
-//            getRestaurants(mRecentAddress);
-//        }
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Wait while loading...");
+        progressDialog.show();
 
         String location = getIntent().getStringExtra("zipcode");
         getRestaurants(location);
@@ -80,9 +84,7 @@ public class RestaurantListActivity extends AppCompatActivity {
             return false;
         }
 
-
     private void getRestaurants(String location) {
-
        final YelpService yelpService = new YelpService();
         YelpService.findRestaurants(location, new Callback() {
 
@@ -94,6 +96,7 @@ public class RestaurantListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 restaurants = yelpService.processResults(response);
+                progressDialog.dismiss();
 
                 RestaurantListActivity.this.runOnUiThread(new Runnable() {
 
