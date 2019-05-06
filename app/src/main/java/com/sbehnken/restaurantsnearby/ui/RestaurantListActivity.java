@@ -102,7 +102,7 @@ public class RestaurantListActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        mAdapter = new RestaurantListAdapter(getApplicationContext(), restaurants);
+                        mAdapter = new RestaurantListAdapter(restaurants);
                         mRecyclerView.setAdapter(mAdapter);
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(RestaurantListActivity.this);
                         mRecyclerView.setLayoutManager(layoutManager);

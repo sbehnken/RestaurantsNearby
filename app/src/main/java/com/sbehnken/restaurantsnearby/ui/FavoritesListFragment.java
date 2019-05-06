@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,13 @@ import com.sbehnken.restaurantsnearby.models.Restaurant;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.sbehnken.restaurantsnearby.RestaurantDetailFragment.RESTAURANTS;
 
 
 public class FavoritesListFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private RestaurantListAdapter mAdapter;
     public ArrayList<Restaurant> restaurants = new ArrayList<>();
     private SharedPreferences mSharedPreferences;
 
@@ -53,13 +54,19 @@ public class FavoritesListFragment extends Fragment {
 
     public void getFavorites() {
         mSharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = mSharedPreferences.getString(RESTAURANTS, "");
-        Type type = new TypeToken<ArrayList<Restaurant>>() {}.getType();
-             List<Restaurant> r = gson.fromJson(json, type);
-             restaurants.addAll(r);
+        if(mSharedPreferences == null) {
+            mSharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        }
 
-        mAdapter = new RestaurantListAdapter(getActivity(), restaurants);
+        Map<String, ?> prefsMap = mSharedPreferences.getAll();
+        for (Map.Entry<String, ?> entry: prefsMap.entrySet()) {
+            Gson gson = new Gson();
+            String json = entry.getValue().toString();
+            Type type = new TypeToken<Restaurant>() {}.getType();
+            restaurants.add((Restaurant) gson.fromJson(json, type));
+        }
+
+        RestaurantListAdapter mAdapter = new RestaurantListAdapter(restaurants);
                 mRecyclerView.setAdapter(mAdapter);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(layoutManager);

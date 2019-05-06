@@ -21,10 +21,8 @@ import java.util.ArrayList;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> {
     private ArrayList<Restaurant> mRestaurants;
-    private Context mContext;
 
-    public RestaurantListAdapter(Context context, ArrayList<Restaurant> restaurants) {
-        mContext = context;
+    public RestaurantListAdapter(ArrayList<Restaurant> restaurants) {
         mRestaurants = restaurants;
     }
 

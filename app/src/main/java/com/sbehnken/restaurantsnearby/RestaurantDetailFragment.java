@@ -8,16 +8,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -79,7 +82,6 @@ public class RestaurantDetailFragment extends Fragment {
         final ImageButton mFavoritesButtonOff = view.findViewById(R.id.favorite_button_off);
         final ImageButton mFavoritesButtonOn = view.findViewById(R.id.favorite_button_on);
 
-
         if (mRestaurant.getImageUrl() != null && !mRestaurant.getImageUrl().isEmpty()) {
             Picasso.with(view.getContext()).load(mRestaurant.getImageUrl()).into(mImageLabel);
         }
@@ -89,6 +91,13 @@ public class RestaurantDetailFragment extends Fragment {
         mRatingLabel.setText(Double.toString(mRestaurant.getRating()) + "/5");
         mPhoneLabel.setText((mRestaurant.getPhone()));
         mAddressLabel.setText(android.text.TextUtils.join(", ", mRestaurant.getAddress()));
+
+        String json = mSharedPreferences.getString(mRestaurant.getPhone(), "");
+        if (json == null || json.isEmpty()) {
+            mFavoritesButtonOff.setVisibility(View.VISIBLE);
+        } else {
+            mFavoritesButtonOff.setVisibility(View.INVISIBLE);
+        }
 
         mSaveRestaurantsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,8 +120,8 @@ public class RestaurantDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mFavoritesButtonOff.setVisibility(View.VISIBLE);
-                Toast.makeText(getActivity(), "Removed from Favorites", Toast.LENGTH_SHORT).show();
-
+                removeData();
+                    Toast.makeText(getActivity(), "Removed from Favorites", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -146,15 +155,22 @@ public class RestaurantDetailFragment extends Fragment {
 
     public void saveData() {
         mSharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = mSharedPreferences.getString(RESTAURANTS, "");
-        Type type = new TypeToken<ArrayList<Restaurant>>() {}.getType();
-        List<Restaurant> r = gson.fromJson(json, type);
-        r.add(mRestaurant);
+//        mSharedPreferences.edit().clear().commit();
 
-        String j = gson.toJson(r);
-        mEditor.putString(RESTAURANTS, j);
+        if(mSharedPreferences == null) {
+            mSharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        }
+            Gson gson = new Gson();
+            String j = gson.toJson(mRestaurant);
+            mEditor.putString(mRestaurant.getPhone(), j);
+            mEditor.commit();
+        }
+
+        public void removeData() {
+        mEditor.remove(mRestaurant.getPhone());
         mEditor.commit();
+        }
     }
 
-}
+
+
